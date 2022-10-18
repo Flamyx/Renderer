@@ -2,6 +2,8 @@
 #define __IMAGE_H__
 
 #include <fstream>
+#include <ostream>
+#include <set>
 
 #pragma pack(push,1)
 struct TGA_Header {
@@ -57,6 +59,10 @@ struct TGAColor {
 		}
 		return *this;
 	}
+
+	inline void operator -=(int val) { b=b-val; r=r-val; g=g-val; }
+
+	void distort_rgb_vals(int val) { this->b=abs(this->b-val); this->r=abs(this->r-val); this->g=abs(this->g-val); }
 };
 
 

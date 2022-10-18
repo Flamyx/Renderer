@@ -4,7 +4,7 @@ LDFLAGS      =
 LIBS         = -lm
 
 DESTDIR = ./
-TARGET  = main
+TARGET  = triangle
 
 OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 
