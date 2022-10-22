@@ -4,7 +4,7 @@ LDFLAGS      =
 LIBS         = -lm
 
 DESTDIR = ./
-TARGET  = triangle
+TARGET  = filled_wireframe_model
 
 OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 

@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ostream>
 #include <set>
+#include <random>
 
 #pragma pack(push,1)
 struct TGA_Header {
@@ -64,7 +65,6 @@ struct TGAColor {
 
 	void distort_rgb_vals(int val) { this->b=abs(this->b-val); this->r=abs(this->r-val); this->g=abs(this->g-val); }
 };
-
 
 class TGAImage {
 protected:
