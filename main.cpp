@@ -28,13 +28,26 @@ int main(int argc, char** argv) {
     TGAImage image(width, height, TGAImage::RGB);
 
     for (int i = 0; i < model->nfaces(); ++i)
-    {
-        TGAColor rand = get_random_tga_color();
+    {   
         std::vector<int> face = model->face(i);
+        //world coordinates
         Vec3f v0 = model->vert(face[0]);
         Vec3f v1 = model->vert(face[1]);
         Vec3f v2 = model->vert(face[2]);
-        triangle(v0, v1, v2, image, rand, width, height);
+
+        TGAColor color;
+        //Vector product of two 3D vectors is a vector that is perpendicular to their surface!
+        Vec3f A = v1 - v0, B = v2 - v0;
+        Vec3f normal = (A ^ B).normalize();
+        //Light Intensity is a dot product of normal with camera-to-triangle vector (vector of light)
+        Vec3f light_dir (0, 0, -1);
+        float intensity = light_dir * normal;
+        if (intensity > 0) {
+        color = TGAColor(255*intensity, 255*intensity,255*intensity, 255);
+        }
+        else continue;
+
+        triangle(v0, v1, v2, image, color, width, height);
        //break;
     }
     

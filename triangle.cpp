@@ -150,7 +150,7 @@ void triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage &image, TGAColor color) {
 
 void triangle(Vec3f t0, Vec3f t1, Vec3f t2, TGAImage &image, TGAColor color, int width, int height) {
     //convert vertices to 2-D and paint triangle with color fill
-    Vec2i v0 ((t0.x + 1.) * width / 2, (t0.y + 1.) * height /2);
+    Vec2i v0 ((t0.x + 1.) * width / 2, (t0.y + 1.) * height / 2);
     Vec2i v1 ((t1.x + 1.) * width / 2, (t1.y + 1.) * height / 2);
     Vec2i v2 ((t2.x + 1.) * width / 2, (t2.y + 1.) * height / 2);
 
