@@ -134,6 +134,8 @@ void line_sweeping_higher_triangle_by_border(Vec2i t0, Vec2i t1, Vec2i t2, TGAIm
 }
 
 void triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage &image, TGAColor color) {
+    //degenerate triangle excluded
+    if (t0.y==t1.y && t0.y==t2.y) return;
     //draw filled triangle with line sweeping algo
     if (t0.y > t1.y) std::swap(t0, t1);
     if (t1.y > t2.y) std::swap(t1, t2);

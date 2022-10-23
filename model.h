@@ -2,6 +2,7 @@
 #define __MODEL_H__
 
 #include <vector>
+#include <string>
 #include "geometry.h"
 
 class Model {
