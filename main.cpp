@@ -24,8 +24,15 @@ int main(int argc, char** argv) {
 
     const int width  = cfg["width"];
     const int height = cfg["height"];
+    const int depth = cfg["depth"];
     bool clown_shading = cfg["clown_shading"];
-    
+
+    int** zbuffer = new int*[width];
+    for (int i = 0; i < width; ++i) {
+        zbuffer[i] = new int[height];
+        for (int  j = 0; j < height; ++j) zbuffer[i][j] = std::numeric_limits<int>::min();
+    }
+
     TGAImage image(width, height, TGAImage::RGB);
 
     for (int i = 0; i < model->nfaces(); ++i)
@@ -50,7 +57,7 @@ int main(int argc, char** argv) {
         }
         else continue;
 
-        triangle(v0, v1, v2, image, color, width, height);
+        triangle(v0, v1, v2, image, color, width, height, depth, zbuffer);
        //break;
     }
     

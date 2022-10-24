@@ -2,5 +2,6 @@
     "object_dir": "./obj/african_head.obj",
     "width": 800,
     "height": 800,
+    "depth": 255,
     "clown_shading": false
 }
