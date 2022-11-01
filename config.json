@@ -1,5 +1,6 @@
 {
     "object_dir": "./obj/african_head.obj",
+    "diffuse_map_path": "./obj/african_head_diffuse.tga",
     "width": 800,
     "height": 800,
     "depth": 255,

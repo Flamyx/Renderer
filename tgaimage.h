@@ -24,7 +24,6 @@ struct TGA_Header {
 #pragma pack(pop)
 
 
-
 struct TGAColor {
 	union {
 		struct {
@@ -66,6 +65,7 @@ struct TGAColor {
 	void distort_rgb_vals(int val) { this->b=abs(this->b-val); this->r=abs(this->r-val); this->g=abs(this->g-val); }
 };
 
+
 class TGAImage {
 protected:
 	unsigned char* data;
@@ -98,5 +98,6 @@ public:
 	unsigned char *buffer();
 	void clear();
 };
+
 
 #endif //__IMAGE_H__

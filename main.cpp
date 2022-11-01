@@ -25,7 +25,9 @@ int main(int argc, char** argv) {
     const int width  = cfg["width"];
     const int height = cfg["height"];
     const int depth = cfg["depth"];
-    bool clown_shading = cfg["clown_shading"];
+    std::string diffuse_map_path = cfg["diffuse_map_path"];
+
+    model->load_diffuse_map(diffuse_map_path);
 
     int** zbuffer = new int*[width];
     for (int i = 0; i < width; ++i) {
@@ -47,20 +49,24 @@ int main(int argc, char** argv) {
         //Vector product of two 3D vectors is a vector that is perpendicular to their surface!
         Vec3f A = v1 - v0, B = v2 - v0;
         // !!! Because I'm going from A to B light direction is from (0, 0, 1) if B to A (B ^ A) then (0, 0, -1) !!!
-        Vec3f normal = (A ^ B).normalize();
+        Vec3f normal = (B ^ A).normalize();
         //Light Intensity is a dot product of normal with camera-to-triangle vector (vector of light)
-        Vec3f light_dir (0, 0, 1);
-        float intensity = light_dir * normal;
-        if (clown_shading) color = get_random_tga_color();
-        else if (intensity > 0) {
-        color = TGAColor(255*intensity, 255*intensity,255*intensity, 255);
+        Vec3f light_dir (0, 0, -1);
+        float intensity = normal * light_dir;
+        if (intensity <= 0) continue;
+        if (intensity>0) {
+            triangle(v0, v1, v2, image, TGAColor(intensity*255, intensity*255, intensity*255, 255), width, height);
         }
-        else continue;
-
-        triangle(v0, v1, v2, image, color, width, height, depth, zbuffer);
-       //break;
+        //now Paint vertex textures
+        // std::vector<Vec2i> vts;
+        // for (int vt_idx = 0; vt_idx < 3; ++vt_idx) {
+        //     Vec2i vt = model->get_texture_uv(i, vt_idx);
+        //     vts.push_back(vt);
+        // }
+        
+        // triangle(v0, v1, v2, vts[0], vts[1], vts[2], image, model, width, height, depth, zbuffer, intensity);
     }
-    
+
     image.flip_vertically(); // i want to have the origin at the left bottom corner of the image
     image.write_tga_file("output.tga");
     delete model;
