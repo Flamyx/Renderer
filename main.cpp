@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     }
 
     TGAImage image(width, height, TGAImage::RGB);
-
+    Vec3f light_dir (0, 0, 1);
     for (int i = 0; i < model->nfaces(); ++i)
     {   
         std::vector<int> face = model->face(i);
@@ -49,22 +49,22 @@ int main(int argc, char** argv) {
         //Vector product of two 3D vectors is a vector that is perpendicular to their surface!
         Vec3f A = v1 - v0, B = v2 - v0;
         // !!! Because I'm going from A to B light direction is from (0, 0, 1) if B to A (B ^ A) then (0, 0, -1) !!!
-        Vec3f normal = (B ^ A).normalize();
+        Vec3f normal = (A ^ B).normalize();
         //Light Intensity is a dot product of normal with camera-to-triangle vector (vector of light)
-        Vec3f light_dir (0, 0, -1);
+        
         float intensity = normal * light_dir;
         if (intensity <= 0) continue;
-        if (intensity>0) {
-            triangle(v0, v1, v2, image, TGAColor(intensity*255, intensity*255, intensity*255, 255), width, height);
-        }
-        //now Paint vertex textures
-        // std::vector<Vec2i> vts;
-        // for (int vt_idx = 0; vt_idx < 3; ++vt_idx) {
-        //     Vec2i vt = model->get_texture_uv(i, vt_idx);
-        //     vts.push_back(vt);
+        // if (intensity>0) {
+        //     triangle(v0, v1, v2, image, TGAColor(intensity*255, intensity*255, intensity*255, 255), width, height);
         // }
+        //now Paint vertex textures
+        std::vector<Vec2i> vts;
+        for (int vt_idx = 0; vt_idx < 3; ++vt_idx) {
+            Vec2i vt = model->get_texture_uv(i, vt_idx);
+            vts.push_back(vt);
+         }
         
-        // triangle(v0, v1, v2, vts[0], vts[1], vts[2], image, model, width, height, depth, zbuffer, intensity);
+        triangle(v0, v1, v2, vts[0], vts[1], vts[2], image, model, width, height, depth, zbuffer, intensity);
     }
 
     image.flip_vertically(); // i want to have the origin at the left bottom corner of the image

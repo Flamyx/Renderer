@@ -22,10 +22,9 @@ Model::Model(const char *filename) : verts_(), faces_() {
             verts_.push_back(v);
         }
         else if (!line.compare(0, 3, "vt ")) {
-            iss >> trash;
+            iss >> trash >> trash;
             Vec2f vt;
             for (int i = 0; i < 2; ++i) iss >> vt.raw[i];
-            iss >> trash;
             vert_textures_.push_back(vt);
         }
         else if (!line.compare(0, 3, "vn ")) {
