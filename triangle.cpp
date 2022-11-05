@@ -276,6 +276,41 @@ void line_sweeping_higher_triangle_by_border(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i
 }
 
 
+void line_sweeping_triangle_by_border(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i vt0, Vec2i vt1, Vec2i vt2, TGAImage &image, Model* model, int** zbuffer, float intensity)
+{
+    int total_height = t2.y - t0.y;
+    for (int y=0; y <= total_height; ++y)
+    {
+        bool lower_part = y <= t1.y - t0.y && t0.y != t1.y ;
+        int segment_height = lower_part? t1.y - t0.y: t2.y - t1.y;
+        float alpha = (float) y / total_height;
+        float beta = (float) (y - (lower_part ? 0 : t1.y - t0.y)) / segment_height;
+        //std::cout << "lower part is " << lower_part << std::endl;
+        Vec3i segP = lower_part ? t0 + Vec3f(t1 - t0) * beta : t1 + Vec3f(t2 - t1) * beta;
+        Vec3i totalP = t0 + Vec3f(t2 - t0) * alpha;
+
+        Vec2i segUV = lower_part ? vt0 + (vt1 - vt0) * beta : vt1 + (vt2 - vt1) * beta;
+        Vec2i totalUV = vt0 + (vt2 - vt0) * alpha;
+
+        if (segP.x > totalP.x) std::swap(segP, totalP);
+
+        float total_width = totalP.x - segP.x;
+
+        for (int x = segP.x; x <= totalP.x; ++x)
+        {
+            float phi = segP.x == totalP.x ? 1 : (float) (x - segP.x) / total_width;
+            Vec3i curP = Vec3f(segP) + Vec3f(totalP - segP) * phi;
+            Vec2i uvP = segUV + (totalUV - segUV) * phi;
+            TGAColor color = model->diffuse(uvP, intensity);
+            if (zbuffer[curP.x][curP.y] < curP.z) {
+                image.set(curP.x, curP.y, color);
+                zbuffer[curP.x][curP.y] = curP.z;
+            }
+        }
+    }
+}
+
+
 void triangle(Vec2i t0, Vec2i t1, Vec2i t2, TGAImage &image, TGAColor color) {
     //degenerate triangle excluded
     if (t0.y==t1.y && t0.y==t2.y) return;
@@ -321,10 +356,7 @@ void triangle(Vec3i t0, Vec3i t1, Vec3i t2, Vec2i vt0, Vec2i vt1, Vec2i vt2, TGA
     //separate triangle by horizontal line from t1 
     //draw lower triangle first then the above one
 
-    line_sweeping_lower_triangle_by_border(t0, t1, t2, vt0, vt1, vt2, image, model, zbuffer, intensity);
-    //change color (optional for checking) and fill the higher part fo the triangle
-    //color.distort_rgb_vals(80);
-    line_sweeping_higher_triangle_by_border(t0, t1, t2, vt0, vt1, vt2, image, model, zbuffer, intensity);
+    line_sweeping_triangle_by_border(t0, t1, t2, vt0, vt1, vt2, image, model, zbuffer, intensity);
 }
 
 

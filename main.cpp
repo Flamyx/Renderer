@@ -54,10 +54,6 @@ int main(int argc, char** argv) {
         
         float intensity = normal * light_dir;
         if (intensity <= 0) continue;
-        // if (intensity>0) {
-        //     triangle(v0, v1, v2, image, TGAColor(intensity*255, intensity*255, intensity*255, 255), width, height);
-        // }
-        //now Paint vertex textures
         std::vector<Vec2i> vts;
         for (int vt_idx = 0; vt_idx < 3; ++vt_idx) {
             Vec2i vt = model->get_texture_uv(i, vt_idx);
