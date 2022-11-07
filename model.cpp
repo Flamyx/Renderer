@@ -18,19 +18,19 @@ Model::Model(const char *filename) : verts_(), faces_() {
             //the line from .obj file is vertice coordinates
             iss >> trash;
             Vec3f v;
-            for (int i=0;i<3;i++) iss >> v.raw[i];
+            for (int i=0;i<3;i++) iss >> v[i];
             verts_.push_back(v);
         }
         else if (!line.compare(0, 3, "vt ")) {
             iss >> trash >> trash;
             Vec2f vt;
-            for (int i = 0; i < 2; ++i) iss >> vt.raw[i];
+            for (int i = 0; i < 2; ++i) iss >> vt[i];
             vert_textures_.push_back(vt);
         }
         else if (!line.compare(0, 3, "vn ")) {
             iss >> trash >> trash;
             Vec3f n;
-            for (int i=0;i<3;i++) iss >> n.raw[i];
+            for (int i=0;i<3;i++) iss >> n[i];
             vert_normals_.push_back(n);
         }
         else if (!line.compare(0, 2, "f ")) {

@@ -4,5 +4,6 @@
     "width": 800,
     "height": 800,
     "depth": 255,
+    "camera_z_pos": 3,
     "clown_shading": false
 }

@@ -1,5 +1,7 @@
 helper
+example_tgas
 .vscode
 *.exe
 *.o
 *.tga
+!obj/*
