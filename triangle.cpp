@@ -385,5 +385,5 @@ void triangle(Vec3f t0, Vec3f t1, Vec3f t2, Vec2i vt0, Vec2i vt1, Vec2i vt2, TGA
     Vec3i v0 ((t0.x + 1.) * width / 2, (t0.y + 1.) * height / 2, (t0.z + 1.) * depth / 2);
     Vec3i v1 ((t1.x + 1.) * width / 2, (t1.y + 1.) * height / 2, (t1.z + 1.) * depth / 2);
     Vec3i v2 ((t2.x + 1.) * width / 2, (t2.y + 1.) * height / 2, (t2.z + 1.) * depth / 2);
-    triangle(t0, t1, t2, vt0, vt1, vt2, image, model, zbuffer, intensity);
+    triangle(v0, v1, v2, vt0, vt1, vt2, image, model, zbuffer, intensity);
 }
