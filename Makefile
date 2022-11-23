@@ -1,10 +1,10 @@
 SYSCONF_LINK = g++
-CPPFLAGS     = -O3
+CPPFLAGS     = -Wall 
 LDFLAGS      = -O3
 LIBS         = -lm
 
 DESTDIR = ./
-TARGET  = filled_wireframe_model
+TARGET  = main
 
 OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 
@@ -20,4 +20,3 @@ clean:
 	-rm -f $(OBJECTS)
 	-rm -f $(TARGET)
 	-rm -f *.tga
-

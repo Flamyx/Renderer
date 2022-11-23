@@ -85,10 +85,8 @@ TGAImage Model::get_diffuse_map() {
     return diffuse_map_;
 }
 
-TGAColor Model::diffuse(Vec2i uv, float intensity) {
-    TGAColor text = diffuse_map_.get(uv.x, uv.y);
-    text = TGAColor(text.r*intensity, text.g*intensity, text.b*intensity, 255);
-    return text;
+TGAColor Model::diffuse(Vec2i uv) {
+    return diffuse_map_.get(uv.x, uv.y);
 }
 
 Vec2i Model::get_texture_uv(int face_idx, int vert_idx) {

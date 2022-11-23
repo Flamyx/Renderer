@@ -23,7 +23,7 @@ public:
 	Vec3f vert_normal(int i);
 	std::vector<int> face(int idx);
 	void load_diffuse_map(std::string filename);
-	TGAColor diffuse(Vec2i uv, float intensity);
+	TGAColor diffuse(Vec2i uv);
 	Vec2i get_texture_uv (int face_idx, int vert_idx);
 	TGAImage get_diffuse_map ();
 };
