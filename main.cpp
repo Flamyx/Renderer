@@ -88,12 +88,13 @@ int main(int argc, char** argv) {
             Vec3f norm = model->vert_normal(face[j]);
             intensity[j] = norm * light_dir;
         }
+
         std::vector<Vec2i> vts;
         for (int vt_idx = 0; vt_idx < 3; ++vt_idx) {
             Vec2i vt = model->get_texture_uv(i, vt_idx);
             vts.push_back(vt);
-         }
-        triangle(screen_coords[0], screen_coords[1], screen_coords[2], intensity, image, model, zbuffer, width, height);
+        }
+        triangle(screen_coords[0], screen_coords[1], screen_coords[2], vts[0], vts[1], vts[2], intensity, image, model, zbuffer, width, height);
     }
 
     image.flip_vertically(); // i want to have the origin at the left bottom corner of the image
